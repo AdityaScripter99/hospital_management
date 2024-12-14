@@ -6,4 +6,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', accounts_views.home, name='home'),  # Home Page
     path('accounts/', include('accounts.urls')),
+    path('appointments/', include('appointments.urls')),
 ]
