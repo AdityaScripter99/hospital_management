@@ -1,0 +1,30 @@
+# Ignore Python bytecode
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Ignore Django migrations
+*/migrations/*
+!*/migrations/__init__.py  # Allow the __init__.py file for package recognition
+
+# Ignore SQLite database files
+*.sqlite3
+*.db
+
+# Ignore virtual environment (if applicable)
+venv/
+.env/
+
+# Ignore logs
+*.log
+*.out
+*.err
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore IDE/project files
+.idea/
+.vscode/
+*.swp
