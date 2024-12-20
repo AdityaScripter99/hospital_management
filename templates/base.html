@@ -88,11 +88,16 @@
     <nav>
         <a href="#" class="logo">Hospital Management</a>
         <ul>
+            {% if request.user.is_authenticated %}
             <li><a href="#">Home</a></li>
             <li><a href="{% url 'patient_dashboard'%}">Patient Dashboard</a></li>
             <li><a href="{% url 'doctor_dashboard'%}">Doctor Dashboard</a></li>
             <li><a href="{% url 'book_appointment' %}">Appointments</a></li>
+            <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+            {% else %}
             <li><a href="{% url 'login' %}">Login</a></li>
+            {% endif %}
         </ul>
     </nav>
 
