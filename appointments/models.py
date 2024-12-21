@@ -22,12 +22,15 @@ class Appointment(models.Model):
         ('Rejected', 'Rejected'),
     ]
 
-    doctor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,related_name='appointments')
-    patient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,related_name='appointments_received')
+    doctor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='appointments')
+    patient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='appointments_received')
     date = models.DateField()
     time = models.TimeField()
     reason = models.TextField()
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='Pending')
+
+    class Meta:
+        unique_together = ('doctor', 'patient', 'date', 'time')
 
     def __str__(self):
         return f"Appointment with {self.doctor.username} - {self.status}"

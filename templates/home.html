@@ -13,7 +13,7 @@
     {% if user.is_authenticated %}
         <a href="{% url 'patient_dashboard' %}" class="btn">Go to Patient Dashboard</a>
     {% else %}
-        <a href="{% url 'login' %}" class="btn">Login</a>
+        <a href="{% url 'login_page' %}" class="btn">Login</a>
         <a href="{% url 'doctor_register' %}" class="btn">Register as Doctor</a>
         <a href="{% url 'patient_register' %}" class="btn">Register as Patient</a>
     {% endif %}

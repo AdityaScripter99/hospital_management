@@ -6,97 +6,100 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Hospital Management{% endblock %}</title>
     <style>
+        /* General Styles */
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f8f9fa;
         }
-        
-        /* Navigation Bar */
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Navbar Styles */
         nav {
             background-color: #007bff;
             padding: 10px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            color: white;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        
-        nav .logo {
+
+        .navbar-logo {
             font-size: 24px;
             font-weight: bold;
-            color: white;
-            text-decoration: none;
         }
-        
-        nav ul {
+
+        .navbar-menu {
             list-style: none;
+            display: flex;
             margin: 0;
             padding: 0;
-            display: flex;
         }
-        
-        nav ul li {
+
+        .navbar-menu li {
             margin-left: 20px;
         }
-        
-        nav ul li a {
+
+        .navbar-menu li a {
             color: white;
-            text-decoration: none;
             font-size: 16px;
             transition: color 0.3s ease;
         }
-        
-        nav ul li a:hover {
+
+        .navbar-menu li a:hover {
             color: #e2e6ea;
         }
-        
-        /* Footer */
+
+        /* Footer Styles */
         footer {
             background-color: #343a40;
             color: white;
-            padding: 20px 0;
             text-align: center;
-            position: absolute;
-            bottom: 0;
+            padding: 10px 0;
+            position: relative;
+            margin-top: 20px;
             width: 100%;
         }
-        
+
         footer p {
             margin: 0;
+            font-size: 14px;
         }
-        
-        /* Container */
+
+        /* Main Content */
         .container {
-            max-width: 1200px;
-            margin: 20px auto;
+            max-width: 800px;
+            margin: 30px auto;
             padding: 20px;
             background: white;
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        
-        h1, h2, h3 {
-            color: #333;
-            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
 <body>
-    <!-- Navigation Bar -->
+    <!-- Navbar -->
     <nav>
-        <a href="#" class="logo">Hospital Management</a>
-        <ul>
+        <div class="navbar-logo">
+            <a href="/">Hospital Management</a>
+        </div>
+        <ul class="navbar-menu">
             {% if request.user.is_authenticated %}
-            <li><a href="#">Home</a></li>
-            <li><a href="{% url 'patient_dashboard'%}">Patient Dashboard</a></li>
-            <li><a href="{% url 'doctor_dashboard'%}">Doctor Dashboard</a></li>
-            <li><a href="{% url 'book_appointment' %}">Appointments</a></li>
-            <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
-            <li><a href="{% url 'logout' %}">Logout</a></li>
+            <li><a href="/">Home</a></li>
+            <li><a href="{% url 'logout_page' %}">Logout</a></li>
             {% else %}
-            <li><a href="{% url 'login' %}">Login</a></li>
+            <li><a href="{% url 'login_page' %}">Login</a></li>
+            <li><a href="{% url 'patient_register' %}">Register</a></li>
             {% endif %}
         </ul>
     </nav>
@@ -110,8 +113,6 @@
     <!-- Footer -->
     <footer>
         <p>&copy; 2024 Hospital Management System. All Rights Reserved.</p>
-        <p>Designed with care to streamline hospital workflows.</p>
     </footer>
 </body>
 </html>
-

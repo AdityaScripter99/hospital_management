@@ -2,6 +2,56 @@
 {% load static %}
 {% block title %}Book Appointment{% endblock %}
 {% block content %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f7fc;
+    }
+
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+
+    form {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        width: 50%;
+        margin: 0 auto;
+        box-sizing: border-box;
+    }
+
+    form button {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
+    }
+
+    form button:hover {
+        background-color: #0056b3;
+    }
+
+    form input, form select, form textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+
+    form input[type="date"], form input[type="time"] {
+        width: 100%;
+    }
+</style>
+
 <h2>Book an Appointment</h2>
 <form method="post">
     {% csrf_token %}
