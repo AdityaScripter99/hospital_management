@@ -7,11 +7,10 @@
         font-family: 'Arial', sans-serif;
         margin: 0;
         padding: 0;
-        display: flex;
         justify-content: center;
         align-items: center;
         min-height: 100vh;
-        background: url('https://source.unsplash.com/1600x900/?hospital,healthcare') no-repeat center center/cover;
+        background: url('https://t3.ftcdn.net/jpg/06/52/68/96/360_F_652689637_FeS23II0yZBCmWJIfq9tte2FO16PvUwq.jpg') no-repeat center center/cover;
     }
     
     /* Register Container */
@@ -100,7 +99,7 @@
         color: #0056b3;
         text-decoration: underline;
     }
-    
+
     /* Subtle Animation */
     @keyframes fadeIn {
         from {
@@ -128,7 +127,6 @@
         }
     }
     </style>
-    
 
 <div class="register-container">
     <h2>Register</h2>
@@ -137,5 +135,6 @@
         {{ form.as_p }}
         <button type="submit">Register</button>
     </form>
+    <p>Already have an account? <a href="{% url 'login_page' %}">Login</a></p>
 </div>
 {% endblock %}
