@@ -3,9 +3,21 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .forms import RegistrationForm
 from .models import Profile
+from .forms import ContactForm
 
 def home(request):
     return render(request, 'home.html')
+
+def contact(request):
+
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            form.save()  # Save the data to the database
+            return redirect('contact')  # Redirect to the same page or a thank-you page
+    else:
+        form = ContactForm()
+    return render(request, 'accounts/contact.html', {'form': form})
 
 def register(request):
     if request.method == 'POST':

@@ -11,3 +11,14 @@ class Profile(models.Model):
 
     def __str__(self):
         return f"{self.user.username} ({self.role})"
+    
+class ContactMessage(models.Model):
+    name = models.CharField(max_length=100)  # User's name
+    email = models.EmailField()              # User's email 
+    subject = models.CharField(max_length=200)  # Subject of the message
+    message = models.TextField()             # Message content
+    created_at = models.DateTimeField(auto_now_add=True)  # Timestamp of submission
+
+    def __str__(self):
+        return f"{self.name} - {self.subject}"
+
