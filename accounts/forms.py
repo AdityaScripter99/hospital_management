@@ -1,30 +1,35 @@
 from django import forms
-from .models import CustomUser
+from django.contrib.auth.models import User
+from .models import Profile
 
-class DoctorRegistrationForm(forms.ModelForm):
-    class Meta:
-        model = CustomUser
-        fields = ['username', 'email', 'password']
-        widgets = {'password': forms.PasswordInput()}
-    
-    def save(self, commit=True):
-        user = super().save(commit=False)
-        user.set_password(self.cleaned_data['password'])  # Hash the password
-        user.role = 'doctor'
-        if commit:
-            user.save()
-        return user
+class RegistrationForm(forms.ModelForm):
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={'placeholder': 'Enter your password'}),
+        label="Password"
+    )
+    confirm_password = forms.CharField(
+        widget=forms.PasswordInput(attrs={'placeholder': 'Confirm your password'}),
+        label="Confirm Password"
+    )
+    role = forms.ChoiceField(
+        choices=Profile.ROLE_CHOICES,
+        widget=forms.Select(attrs={'class': 'form-control'}),
+        label="Register as"
+    )
 
-class PatientRegistrationForm(forms.ModelForm):
     class Meta:
-        model = CustomUser
+        model = User
         fields = ['username', 'email', 'password']
-        widgets = {'password': forms.PasswordInput()}
-    
-    def save(self, commit=True):
-        user = super().save(commit=False)
-        user.set_password(self.cleaned_data['password'])  # Hash the password
-        user.role = 'patient'
-        if commit:
-            user.save()
-        return user
+        widgets = {
+            'username': forms.TextInput(attrs={'placeholder': 'Enter your username'}),
+            'email': forms.EmailInput(attrs={'placeholder': 'Enter your email'}),
+        }
+
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get("password")
+        confirm_password = cleaned_data.get("confirm_password")
+
+        if password != confirm_password:
+            raise forms.ValidationError("Passwords do not match.")
+        return cleaned_data

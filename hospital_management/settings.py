@@ -41,7 +41,6 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'hospital_management.urls'
-AUTH_USER_MODEL = 'accounts.CustomUser'
 
 
 

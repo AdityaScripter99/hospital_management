@@ -1,48 +1,43 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from .forms import DoctorRegistrationForm, PatientRegistrationForm
 from django.contrib import messages
+from .forms import RegistrationForm
+from .models import Profile
 
 def home(request):
     return render(request, 'home.html')
 
-def doctor_register(request):
+def register(request):
     if request.method == 'POST':
-        form = DoctorRegistrationForm(request.POST)
+        form = RegistrationForm(request.POST)
         if form.is_valid():
-            form.save()
-            messages.success(request, 'Doctor registered successfully. Please log in.')
-            return redirect('login_page')
-    else:
-        form = DoctorRegistrationForm()
-    return render(request, 'accounts/register.html', {'form': form, 'role': 'Doctor'})
+            user = form.save(commit=False)
+            user.set_password(form.cleaned_data['password'])
+            user.save()
 
-def patient_register(request):
-    if request.method == 'POST':
-        form = PatientRegistrationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Patient registered successfully. Please log in.')
+            # Assign role to the user
+            role = form.cleaned_data['role']
+            Profile.objects.create(user=user, role=role)
+
+            messages.success(request, f"Registration successful as {role}.")
             return redirect('login_page')
     else:
-        form = PatientRegistrationForm()
-    return render(request, 'accounts/register.html', {'form': form, 'role': 'Patient'})
+        form = RegistrationForm()
+    return render(request, 'accounts/register.html', {'form': form})
 
 def login_page(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
-
         user = authenticate(request, username=username, password=password)
-        if user is not None:
+        if user:
             login(request, user)
-            messages.success(request, 'Logged in successfully.')
             return redirect('home')
         else:
-            messages.error(request, 'Invalid username or password.')
+            messages.error(request, "Invalid credentials.")
     return render(request, 'accounts/login.html')
 
 def logout_page(request):
     logout(request)
-    messages.success(request, 'You have been logged out.')
+    messages.success(request, "Logged out successfully.")
     return redirect('login_page')

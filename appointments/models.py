@@ -1,20 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.conf import settings
 
-# Extend the User model for Patients and Doctors
-class Profile(models.Model):
-    ROLE_CHOICES = [
-        ('Patient', 'Patient'),
-        ('Doctor', 'Doctor'),
-    ]
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    role = models.CharField(max_length=10, choices=ROLE_CHOICES)
-
-    def __str__(self):
-        return f"{self.user.username} ({self.role})"
-
-# Appointment Model
 class Appointment(models.Model):
     STATUS_CHOICES = [
         ('Pending', 'Pending'),
@@ -22,8 +8,8 @@ class Appointment(models.Model):
         ('Rejected', 'Rejected'),
     ]
 
-    doctor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='appointments')
-    patient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='appointments_received')
+    doctor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='appointments_as_doctor')
+    patient = models.ForeignKey(User, on_delete=models.CASCADE, related_name='appointments_as_patient')
     date = models.DateField()
     time = models.TimeField()
     reason = models.TextField()
@@ -34,4 +20,3 @@ class Appointment(models.Model):
 
     def __str__(self):
         return f"Appointment with {self.doctor.username} - {self.status}"
-
